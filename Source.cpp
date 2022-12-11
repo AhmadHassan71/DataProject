@@ -73,10 +73,14 @@ void AVLinsertion(int choice, int num)
         strobj = line;
         if (line[0] == '\"')
         {
+            getline(f, line, '\"');
+            strobj += line;
             getline(f, line, ',');
             strobj += line;
+            strobj += '\"';
         }
         //cout<<" "<<strobj<<" ";
+        
         cause113 = strobj;
         //getline(f, strobj, '\"');
 
@@ -263,9 +267,13 @@ void RBinsertion(int choice, int num)
         strobj = line;
         if (line[0] == '\"')
         {
+            getline(f, line, '\"');
+            strobj += line;
             getline(f, line, ',');
             strobj += line;
+            strobj += '\"';
         }
+        
         //cout<<" "<<strobj<<" ";
         cause113 = strobj;
         //getline(f, strobj, '\"');
@@ -289,15 +297,15 @@ void RBinsertion(int choice, int num)
 
         temp.insertNode(id, year, cause113, cause, state, death, deathrate);
 
-        /*
-        std::cout << "\nid : " << id;
+        
+        /*std::cout << "\nid : " << id;
         std::cout << "\nyears : " << year;
         std::cout << "\ncause113 : " << cause113;
         std::cout << "\ncause : " << cause;
         std::cout << "\nstate: " << state;
         std::cout << "\ndeaths : " << death;
-        std::cout << "\ndeathrate : " << deathrate;
-        */
+        std::cout << "\ndeathrate : " << deathrate;*/
+        
 
         //obj.insertNode(id,year,cause113,cause,state,death,deathrate,1);
 
@@ -456,9 +464,13 @@ void BTreeinsertion(int choice, int num)
         strobj = line;
         if (line[0] == '\"')
         {
+            getline(f, line, '\"');
+            strobj += line;
             getline(f, line, ',');
             strobj += line;
+            strobj += '\"';
         }
+        
         //cout<<" "<<strobj<<" ";
         cause113 = strobj;
         //getline(f, strobj, '\"');
