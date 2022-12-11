@@ -220,6 +220,7 @@ public:
         temp->data = val;
         temp->year = year;
         temp->cause113 = cause113;
+        temp->cause = cause;     
         temp->state = state;
         temp->death = death;
         temp->deathrate = deathrate;
