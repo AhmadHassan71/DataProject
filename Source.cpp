@@ -6,7 +6,7 @@
 #include "RedBlack.h"
 
 using namespace std;
-
+using namespace std;
 
 void AVLinsertion(int choice, int num)
 {
@@ -22,6 +22,7 @@ void AVLinsertion(int choice, int num)
     string path10 = "datafiles/NCHS_-_Leading_Causes_of_Death__United_States_10.csv";
     int linenum = 0;
 
+ 
     switch (num)
     {
     case 1:
@@ -46,6 +47,7 @@ void AVLinsertion(int choice, int num)
     case 10:
         path = path10; break;
     }
+
     //AVL<int,string,double> obj;
     AVL<int> temp;
     fstream f;
@@ -54,6 +56,9 @@ void AVLinsertion(int choice, int num)
     string line, strobj, cause113, cause, state;
     double deathrate = 0;
     int death = 0, id = 0, year = 0;
+  //  path = "";
+    
+
 
     getline(f, line);
     //getline(f, strobj);
@@ -80,7 +85,7 @@ void AVLinsertion(int choice, int num)
             strobj += '\"';
         }
         //cout<<" "<<strobj<<" ";
-        
+
         cause113 = strobj;
         //getline(f, strobj, '\"');
 
@@ -117,7 +122,7 @@ void AVLinsertion(int choice, int num)
     // inputs until it finds a comma
 
     //    can be used to store objects until a comma is reached
-
+    
     //i++;
     //cout<<endl<<temp.root->data.ID<<endl;
     //temp.levelOrder();
@@ -127,85 +132,112 @@ void AVLinsertion(int choice, int num)
     temp.AVLprint(temp.root);
     //  readAVL(num);
      // temp.delNode(5);
-
+    int ch = 0;
+    bool esc = 1;
   // --------------------------------------------------------------------------------------------\\
       Range Search, Point Search and Delete point and range functions
 
-    cout << "\n---------------------------------------\n";
-    cout << "Functionality Menu" << endl;
-    cout << "---------------------------------------\n";
-    int opt = 0;
-    do
-    {
-        cout << "1- Point Search\n2- Range Search\n3- Point Update\n4- Point Delete\n";
-        cout << "Select your choice( 1~4 ) : ";
-        cin >> opt;
-    } while (opt < 1 and opt>4);
-    int idnum = 0, idnum2 = 0;
-    node<int>* t2;
-    switch (opt)
-    {
-    case 1:
-        cout << "Enter the ID you want to search: ";
-        cin >> idnum;
-        t2 = temp.retrieve(idnum);
-        cout << endl << t2->data << " " << t2->year << " \"" << t2->cause113 << "\" " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
-        break;
-    case 2:
-        cout << "Enter the Lower Range: ";
-        cin >> idnum;
-        cout << "Enter the Upper Range: ";
-        cin >> idnum2;
-        while (idnum != (idnum2 + 1))
+    while (esc) {
+        cout << "\n---------------------------------------\n";
+        cout << "Functionality Menu" << endl;
+        cout << "---------------------------------------\n";
+        int opt = 0;
+        do
         {
+            cout << "1- Point Search\n2- Range Search\n3- Point Update\n4- Point Delete\n";
+            cout << "Select your choice( 1~4 ) : ";
+            cin >> opt;
+        } while (opt < 1 and opt>4);
+        int idnum = 0, idnum2 = 0;
+        node<int>* t2;
+        switch (opt)
+        {
+        case 1:
+            cout << "Enter the ID you want to search: ";
+            cin >> idnum;
             t2 = temp.retrieve(idnum);
-            cout << endl << t2->data << " " << t2->year << " " << t2->cause113 << " " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
-            idnum++;
-        }
-        break;
-    case 3:
-        cout << "Enter the ID you want to update: ";
-        cin >> idnum;
-        if (temp.retrieve(idnum))
-        {
-            temp.delNode(idnum);
-            cout << "Enter new ID : ";
-            cin >> id;
-            cout << "Enter year: ";
-            cin >> year;
-            cout << "Enter Cause113: ";
-            cin >> cause113;
-            cout << "Enter cause: ";
-            cin >> cause;
-            cout << "Enter state: ";
-            cin >> state;
-            cout << "Enter deaths: ";
-            cin >> death;
-            cout << "Enter deathrate: ";
-            cin >> deathrate;
-            temp.insertNode(id, year, cause113, cause, state, death, deathrate);
-            cout << "New node has been created" << endl;
-            t2 = temp.retrieve(id);
-            cout << endl << t2->data << " " << t2->year << " " << t2->cause113 << " " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
-        }
-        else {
-            cout << "node not found" << endl;
-        }
-        break;
-    case 4:
-        cout << "Enter the ID you want to Delete: ";
-        cin >> idnum;
-        temp.delNode(idnum);
-        break;
-    }
+            cout << endl << t2->data << " " << t2->year << " \"" << t2->cause113 << "\" " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
+            break;
+        case 2:
+            cout << "Enter the Lower Range: ";
+            cin >> idnum;
+            cout << "Enter the Upper Range: ";
+            cin >> idnum2;
+            while (idnum != (idnum2 + 1))
+            {
+                t2 = temp.retrieve(idnum);
+                cout << endl << t2->data << " " << t2->year << " " << t2->cause113 << " " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
+                idnum++;
+            }
+            break;
+        case 3:
+            cout << "Enter the ID you want to update: ";
+            cin >> idnum;
+            cout << "1-Year\n2-Cause113\n3-Cause\n4-State\n5-Deaths\n6-Deathrate\nEnter the data you want to update (1~6): \n";
+            cin >> ch;
 
+            if (temp.retrieve(idnum))
+            {
+                t2 = temp.retrieve(idnum);
+                switch (ch)
+                {
+                case 1:
+                    cout << "Enter year: ";
+                    cin >> year;
+                    t2->year = year;
+                    break;
+                case 2:
+                    cout << "Enter Cause113: ";
+                    cin >> cause113;
+                    t2->cause113 = cause113;
+
+                    break;
+                case 3:
+                    cout << "Enter cause: ";
+                    cin >> cause;
+                    t2->cause = cause;
+                    break;
+                case 4:
+                    cout << "Enter state: ";
+                    cin >> state;
+                    t2->state = state; break;
+                case 5:
+                    cout << "Enter deaths: ";
+                    cin >> death;
+                    t2->death = death;
+                case 6:
+                    cout << "Enter deathrate: ";
+                    cin >> deathrate;
+                    t2->deathrate = deathrate;
+
+                default:
+                    break;
+                }
+
+                cout << "Updated node " << endl;
+                //t2 = temp.retrieve(id);
+                cout << endl << t2->data << " " << t2->year << " " << t2->cause113 << " " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
+            }
+            else {
+                cout << "node not found" << endl;
+            }
+            break;
+        case 4:
+            cout << "Enter the ID you want to Delete: ";
+            cin >> idnum;
+            temp.delNode(idnum);
+            break;
+        }
+        cout << "\nEnter 1 to continue || 0 to exit\n";
+        cin >> esc;
+    }
 
 }
 
 void RBinsertion(int choice, int num)
 {
-    string path = "datafiles/NCHS_-_Leading_Causes_of_Death__United_States_1.csv";
-    string path2 = "datafiles/NCHS_-_Leading_Causes_of_Death__United_States_2.csv";
+    string path = "Test data/NCHS_-_Leading_Causes_of_Death__United_States_1.csv";
+    string path2 = "Test data/NCHS_-_Leading_Causes_of_Death__United_States_8.csv";
     string path3 = "datafiles/NCHS_-_Leading_Causes_of_Death__United_States_3.csv";
     string path4 = "datafiles/NCHS_-_Leading_Causes_of_Death__United_States_4.csv";
     string path5 = "datafiles/NCHS_-_Leading_Causes_of_Death__United_States_5.csv";
@@ -273,7 +305,7 @@ void RBinsertion(int choice, int num)
             strobj += line;
             strobj += '\"';
         }
-        
+
         //cout<<" "<<strobj<<" ";
         cause113 = strobj;
         //getline(f, strobj, '\"');
@@ -297,7 +329,7 @@ void RBinsertion(int choice, int num)
 
         temp.insertNode(id, year, cause113, cause, state, death, deathrate);
 
-        
+
         /*std::cout << "\nid : " << id;
         std::cout << "\nyears : " << year;
         std::cout << "\ncause113 : " << cause113;
@@ -305,7 +337,7 @@ void RBinsertion(int choice, int num)
         std::cout << "\nstate: " << state;
         std::cout << "\ndeaths : " << death;
         std::cout << "\ndeathrate : " << deathrate;*/
-        
+
 
         //obj.insertNode(id,year,cause113,cause,state,death,deathrate,1);
 
@@ -322,87 +354,138 @@ void RBinsertion(int choice, int num)
 
     temp.RBprint(temp.root);
     //readRB(num);
-
+    int ch = 0;
     // --------------------------------------------------------------------------------------------\\
     Range Search, Point Search and Delete point and range functions
-
-    cout << "\n---------------------------------------\n";
-    cout << "Functionality Menu" << endl;
-    cout << "---------------------------------------\n";
-    int opt = 0;
-    do
-    {
-        cout << "1- Point Search\n2- Range Search\n3- Point Update\n4- Point Delete\n";
-        cout << "Select your choice( 1~4 ) : ";
-        cin >> opt;
-    } while (opt < 1 and opt>4);
-    int idnum = 0, idnum2 = 0;
-    node<int>* t2;
-    switch (opt)
-    {
-    case 1:
-        cout << "Enter the ID you want to search: ";
-        cin >> idnum;
-        t2 = temp.retrieve(idnum);
-        cout << endl << t2->data << " " << t2->year << " \"" << t2->cause113 << "\" " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
-        break;
-    case 2:
-        cout << "Enter the Lower Range: ";
-        cin >> idnum;
-        cout << "Enter the Upper Range: ";
-        cin >> idnum2;
-        while (idnum != (idnum2 + 1))
+    bool esc = 1;
+    while (esc) {
+        cout << "\n---------------------------------------\n";
+        cout << "Functionality Menu" << endl;
+        cout << "---------------------------------------\n";
+        
+        int opt = 0;
+        do
         {
+            cout << "1- Point Search\n2- Range Search\n3- Point Update\n4- Point Delete\n";
+            cout << "Select your choice( 1~4 ) : ";
+            cin >> opt;
+        } while (opt < 1 and opt>4);
+        int idnum = 0, idnum2 = 0;
+        node<int>* t2;
+        switch (opt)
+        {
+        case 1:
+            cout << "Enter the ID you want to search: ";
+            cin >> idnum;
             t2 = temp.retrieve(idnum);
-            cout << endl << t2->data << " " << t2->year << " " << t2->cause113 << " " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
-            idnum++;
-        }
-        break;
-    case 3:
-        cout << "Enter the ID you want to update: ";
-        cin >> idnum;
-        if (temp.retrieve(idnum))
-        {
+            cout << endl << t2->data << " " << t2->year << " \"" << t2->cause113 << "\" " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
+            break;
+        case 2:
+            cout << "Enter the Lower Range: ";
+            cin >> idnum;
+            cout << "Enter the Upper Range: ";
+            cin >> idnum2;
+            while (idnum != (idnum2 + 1))
+            {
+                t2 = temp.retrieve(idnum);
+                cout << endl << t2->data << " " << t2->year << " " << t2->cause113 << " " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
+                idnum++;
+            }
+            break;
+        case 3:
+            /*cout << "Enter the ID you want to update: ";
+            cin >> idnum;
+            if (temp.retrieve(idnum))
+            {
+                temp.delNode(idnum);
+                cout << "Enter new ID : ";
+                cin >> id;
+                cout << "Enter year: ";
+                cin >> year;
+                cout << "Enter Cause113: ";
+                cin >> cause113;
+                cout << "Enter cause: ";
+                cin >> cause;
+                cout << "Enter state: ";
+                cin >> state;
+                cout << "Enter deaths: ";
+                cin >> death;
+                cout << "Enter deathrate: ";
+                cin >> deathrate;
+                temp.insertNode(id, year, cause113, cause, state, death, deathrate);
+                cout << "New node has been created" << endl;
+                t2 = temp.retrieve(id);
+                cout << endl << t2->data << " " << t2->year << " " << t2->cause113 << " " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
+            }*/
+            cout << "Enter the ID you want to update: ";
+            cin >> idnum;
+            cout << "1-Year\n2-Cause113\n3-Cause\n4-State\n5-Deaths\n6-Deathrate\nEnter the data you want to update (1~6): \n";
+            cin >> ch;
+
+            if (temp.retrieve(idnum))
+            {
+                t2 = temp.retrieve(idnum);
+                switch (ch)
+                {
+                case 1:
+                    cout << "Enter year: ";
+                    cin >> year;
+                    t2->year = year;
+                    break;
+                case 2:
+                    cout << "Enter Cause113: ";
+                    cin >> cause113;
+                    t2->cause113 = cause113;
+
+                    break;
+                case 3:
+                    cout << "Enter cause: ";
+                    cin >> cause;
+                    t2->cause = cause;
+                    break;
+                case 4:
+                    cout << "Enter state: ";
+                    cin >> state;
+                    t2->state = state; break;
+                case 5:
+                    cout << "Enter deaths: ";
+                    cin >> death;
+                    t2->death = death;
+                case 6:
+                    cout << "Enter deathrate: ";
+                    cin >> deathrate;
+                    t2->deathrate = deathrate;
+
+                default:
+                    break;
+                }
+
+                cout << "Updated node " << endl;
+                //t2 = temp.retrieve(id);
+                cout << endl << t2->data << " " << t2->year << " " << t2->cause113 << " " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
+            }
+            else {
+                cout << "node not found" << endl;
+            }
+
+            break;
+        case 4:
+            cout << "Enter the ID you want to Delete: ";
+            cin >> idnum;
             temp.delNode(idnum);
-            cout << "Enter new ID : ";
-            cin >> id;
-            cout << "Enter year: ";
-            cin >> year;
-            cout << "Enter Cause113: ";
-            cin >> cause113;
-            cout << "Enter cause: ";
-            cin >> cause;
-            cout << "Enter state: ";
-            cin >> state;
-            cout << "Enter deaths: ";
-            cin >> death;
-            cout << "Enter deathrate: ";
-            cin >> deathrate;
-            temp.insertNode(id, year, cause113, cause, state, death, deathrate);
-            cout << "New node has been created" << endl;
-            t2 = temp.retrieve(id);
-            cout << endl << t2->data << " " << t2->year << " " << t2->cause113 << " " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
-        }
-        else {
-            cout << "node not found" << endl;
-        }
 
-        break;
-    case 4:
-        cout << "Enter the ID you want to Delete: ";
-        cin >> idnum;
-        temp.delNode(idnum);
-
-        break;
+            break;
+        }
+        cout << "\nEnter 1 to continue || 0 to exit\n";
+        cin >> esc;
     }
-
 }
 
 
 void BTreeinsertion(int choice, int num)
 {
-    string path = "datafiles/NCHS_-_Leading_Causes_of_Death__United_States_1.csv";
-    string path2 = "datafiles/NCHS_-_Leading_Causes_of_Death__United_States_2.csv";
+    string path = "Test data/NCHS_-_Leading_Causes_of_Death__United_States_1.csv";
+    string path2 = "Test data/NCHS_-_Leading_Causes_of_Death__United_States_8.csv";
     string path3 = "datafiles/NCHS_-_Leading_Causes_of_Death__United_States_3.csv";
     string path4 = "datafiles/NCHS_-_Leading_Causes_of_Death__United_States_4.csv";
     string path5 = "datafiles/NCHS_-_Leading_Causes_of_Death__United_States_5.csv";
@@ -470,7 +553,7 @@ void BTreeinsertion(int choice, int num)
             strobj += line;
             strobj += '\"';
         }
-        
+
         //cout<<" "<<strobj<<" ";
         cause113 = strobj;
         //getline(f, strobj, '\"');
@@ -521,73 +604,77 @@ void BTreeinsertion(int choice, int num)
 
  // --------------------------------------------------------------------------------------------\\
       Range Search, Point Search and Delete point and range functions
+    bool esc = 1;
+    while (esc) {
+        cout << "\n---------------------------------------\n";
+        cout << "Functionality Menu" << endl;
+        cout << "---------------------------------------\n";
 
-    cout << "\n---------------------------------------\n";
-    cout << "Functionality Menu" << endl;
-    cout << "---------------------------------------\n";
-    int opt = 0;
-    int oldId = 0;
-    do
-    {
-        cout << "1- Point Search\n2- Range Search\n3- Point Update\n";
-        cout << "Select your choice( 1~4 ) : ";
-        cin >> opt;
-    } while (opt < 1 and opt>3);
-    int idnum = 0, idnum2 = 0;
-    Bnode<int, string, double>* t2;
-    switch (opt)
-    {
-    case 1:
-        cout << "Enter the ID you want to search: ";
-        cin >> idnum;
-        t2 = btree.seek(idnum);
-        // cout << endl << t2->data << " " << t2->year << " \"" << t2->cause113 << "\" " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
-        break;
-    case 2:
-        cout << "Enter the Lower Range: ";
-        cin >> idnum;
-        cout << "Enter the Upper Range: ";
-        cin >> idnum2;
-        while (idnum != (idnum2 + 1))
+        int opt = 0;
+        int oldId = 0;
+        do
         {
+            cout << "1- Point Search\n2- Range Search\n3- Point Update\n";
+            cout << "Select your choice( 1~4 ) : ";
+            cin >> opt;
+        } while (opt < 1 and opt>3);
+        int idnum = 0, idnum2 = 0;
+        Bnode<int, string, double>* t2;
+        switch (opt)
+        {
+        case 1:
+            cout << "Enter the ID you want to search: ";
+            cin >> idnum;
             t2 = btree.seek(idnum);
-            //  cout << endl << t2->data << " " << t2->year << " " << t2->cause113 << " " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
-            idnum++;
-        }
-        break;
-    case 3:
-        cout << "Enter the ID you want to update: ";
-        cin >> oldId;
-        if (oldId > 0)
-        {
-            cout << "Enter new ID : ";
-            cin >> id;
-            cout << "Enter year: ";
-            cin >> year;
-            cout << "Enter Cause113: ";
-            cin >> cause113;
-            cout << "Enter cause: ";
-            cin >> cause;
-            cout << "Enter state: ";
-            cin >> state;
-            cout << "Enter deaths: ";
-            cin >> death;
-            cout << "Enter deathrate: ";
-            cin >> deathrate;
+            // cout << endl << t2->data << " " << t2->year << " \"" << t2->cause113 << "\" " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
+            break;
+        case 2:
+            cout << "Enter the Lower Range: ";
+            cin >> idnum;
+            cout << "Enter the Upper Range: ";
+            cin >> idnum2;
+            while (idnum != (idnum2 + 1))
+            {
+                t2 = btree.seek(idnum);
+                //  cout << endl << t2->data << " " << t2->year << " " << t2->cause113 << " " << t2->cause << " " << t2->state << " " << t2->death << " " << t2->deathrate << endl;
+                idnum++;
+            }
+            break;
+        case 3:
+            cout << "Enter the ID you want to update: ";
+            cin >> oldId;
+            if (oldId > 0)
+            {
+                cout << "Enter new ID : ";
+                cin >> id;
+                cout << "Enter year: ";
+                cin >> year;
+                cout << "Enter Cause113: ";
+                cin >> cause113;
+                cout << "Enter cause: ";
+                cin >> cause;
+                cout << "Enter state: ";
+                cin >> state;
+                cout << "Enter deaths: ";
+                cin >> death;
+                cout << "Enter deathrate: ";
+                cin >> deathrate;
 
-            // t2 = btree.seek(oldId);
-            t2 = btree.update(oldId, id, year, cause113, cause, state, death, deathrate, 1);
-            t2 = btree.seek(oldId);
-            t2 = btree.seek(id);
+                // t2 = btree.seek(oldId);
+                t2 = btree.update(oldId, id, year, cause113, cause, state, death, deathrate, 1);
+                t2 = btree.seek(oldId);
+                t2 = btree.seek(id);
 
+            }
+            else {
+                cout << "node not found" << endl;
+            }
+            break;
         }
-        else {
-            cout << "node not found" << endl;
-        }
-        break;
+
+        cout << "\nEnter 1 to continue || 0 to exit\n";
+        cin >> esc;
     }
-
-
 }
 
 
@@ -655,19 +742,6 @@ int main()
     cout << "\n :) Good Bye (: \n";
 
 
-    //AVL<int,string,double> avl;
-    //avl.insertNode(9, 2006, "bruhe de momente", "bruhe de momente 2", "Alabama", 132, 123.21, 1);
-    //avl.insertNode(2, 2006, "bruhe de momente", "bruhe de momente 2", "Alabama", 132, 123.21, 1);
-    //avl.insertNode(5, 2006, "bruhe de momente", "bruhe de momente 2", "Alabama", 132, 123.21, 1);
-    //avl.insertNode(10, 2006, "bruhe de momente", "bruhe de momente 2", "Alabama", 132, 123.21, 1);
-    //avl.insertNode(3, 2006, "bruhe de momente", "bruhe de momente 2", "Alabama", 132, 123.21, 1);
-    //avl.insertNode(6, 2006, "bruhe de momente", "bruhe de momente 2", "Alabama", 132, 123.21, 1);
-    //avl.insertNode(7, 2006, "bruhe de momente", "bruhe de momente 2", "Alabama", 132, 123.21, 1);
-    //avl.insertNode(8, 2006, "bruhe de momente", "bruhe de momente 2", "Alabama", 132, 123.21, 1);
-    //avl.insertNode(1, 2006, "bruhe de momente", "bruhe de momente 2", "Alabama", 132, 123.21, 1);
-    //avl.insertNode(4, 2006, "bruhe de momente", "bruhe de momente 2", "Alabama", 132, 123.21, 1);
-    //    
-    //avl.levelOrder();
 
 
     return 0;
